@@ -15,7 +15,7 @@ main:
 findlength:
 	
 	lb $t6,dest($t7)
-	beq $t6,-1,presort
+	beq $t6,-127,presort
 	addi $t7,$t7,1
 	j findlength
 
@@ -54,6 +54,6 @@ end:
 	
 	
 .data
-	dest: .byte 8,4,0,3,53,6,0,-1
+	dest: .byte 8,4,0,3,53,6,0,-127
 	
 
