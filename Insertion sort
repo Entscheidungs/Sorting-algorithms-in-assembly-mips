@@ -1,3 +1,4 @@
+
 .globl main
 
 
@@ -6,36 +7,32 @@
 
 main:
 	li $t5,0
-	li $t0,0
-	li $t1,1
+	li $t7,0
 	li $s1,0
 	li $s2,1
-	li $s5,0 #temp
-	#j findlength
-	li $t7,4
-	j sort
+	j findlength
 
+findlength:
+	
+	lb $t6,dest($t7)
+	beq $t6,-1,presort
+	addi $t7,$t7,1
+	j findlength
+
+presort:
+	addi $t7,$t7,-1
+	lb $zero,dest($t7)
 
 sort:
-	beq $s1,$t7,azzera
+
+	beq $s1,$t7,print
 	lb $s3,dest($s1)
 	lb $s4,dest($s2)
 	bgt $s3,$s4,swap
-	#deve prima fare lo swap e poi giustamente incrementa
 	addi $s1,$s1,1
 	addi $s2,$s2,1
 	lb $t6,dest($s1)
 	j sort
-
-azzera:
-	addi $s5,$s5,1
-	li $s1,0 #azzero gli indici
-	li $s2,1
-	li $t5,0 #æzzero per quando entrerò nel print
-	beq $s5,10,print
-	j sort
-
-call:
 
 print:
 
@@ -45,20 +42,18 @@ print:
 	j print
 
 swap:
+
 	sb $s3,dest($s2)
 	sb $s4,dest($s1)
+	li $s1,0
+	li $s2,1
 	j sort
-
-
 	
 end:
  
 	
 	
 .data
-    	text:  .asciiz "Inizio: "
-	dest: .byte 2,6,0,24,53,-1
+	dest: .byte 8,4,0,3,53,6,0,-1
 	
-	
-	
-	
+
